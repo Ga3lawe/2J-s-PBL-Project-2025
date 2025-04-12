@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>European Travel Guide</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+      padding: 40px 0 20px;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 20px 0;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    /* Buttons */
+    .main-button {
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+      margin: 10px;
+      font-size: 1rem;
+    }
+
+    .main-button:hover {
+      background-color: #1a2530;
+      transform: translateY(-2px);
+    }
+
+    /* Navigation */
+    .nav-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    /* Map section */
+    .map-container {
+      position: relative;
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
+    .map-container img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .country-button {
+      position: absolute;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .country-button:hover {
+      background-color: #1a2530;
+      transform: scale(1.1);
+    }
+
+    /* Info Box */
+    #infoBox {
+      border: 2px solid #ddd;
+      padding: 20px;
+      min-height: 100px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 10px;
+      max-width: 600px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Country Details */
+    .country-details {
+      display: none;
+      padding: 30px 0;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* Cards Grid */
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    /* Budget Calculator */
+    .budget-section {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 600px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .flag-container {
+      margin: 20px 0;
+    }
+
+    #flag {
+      width: 250px;
+      height: 250px;
+      display: none;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      object-fit: cover;
+    }
+
+    .label-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+      margin: 10px 0;
+      padding: 0 30px;
+    }
+
+    select, input {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input {
+      width: 100px;
+      text-align: right;
+    }
+
+    .total-container {
+      margin: 15px 0;
+      font-size: 1.1rem;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .welcome-text {
+      font-size: 1.25rem;
+      margin: 20px 0 40px;
+    }
+      /*Special Thanks sections*/
+    .SpecialThanksPage{
+       height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .Special{
+      background-color: #2c3e50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+      margin: 10px;
+      font-size: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .card {
+        max-width: 100%;
+      }
+      
+      .label-container, .total-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 10px;
+      }
+      
+      input {
+        width: 100%;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Section -->
+  <section id="welcome" class="welcome-section">
+    <h1>European Tour Guide</h1>
+    <p class="welcome-text" id="welcomeMessage">Join us in an amazing adventure across Europe</p>
+    <button class="main-button" id="exploreButton">Discover the world</button>
+    <button class="Special" id="specialButton">Special Thanks</button>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map-section" class="container" style="display:none;">
+    <header>
+      <h1>Interactive Map of Europe</h1>
+    </header>
+    
+    <div id="infoBox">Select a country to see its details</div>
+    
+    <div class="map-container">
+      <img src="europe map.jpg" alt="Europe Map">
+
+      <button class="country-button" style="top: 90%; left: 50%" onclick="showCountry('greece')">Greece</button>
+      <button class="country-button" style="top: 85%; left: 40%" onclick="showCountry('italy')">Italy</button>
+      <button class="country-button" style="top: 83%; left: 74%" onclick="showCountry('turkey')">Turkey</button>
+      <button class="country-button" style="top: 70%; left: 15%" onclick="showCountry('switzerland')">Switzerland</button>
+      <button class="country-button" style="top: 90%; left: 13%" onclick="showCountry('spain')">Spain</button>
+    </div>
+  </section>
+
+  <!-- Country Detail -->
+  <!-- greece -->
+  <section id="greece-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Welcome to Greece</h1>
+        <p>Explore iconic landmarks and traditional foods</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+        <button class="main-button" onclick="showBudgetCalculator('greece')">View Travel Budget</button>
+      </div>
+
+      <h2>Traditional Greek Foods</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="moussaka.jpg" alt="Moussaka">
+          <div class="card-body">
+            <h3>Moussaka</h3>
+            <p>A layered eggplant and minced meat dish, topped with creamy béchamel sauce.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="Souvlaki.jpg" alt="Souvlaki">
+          <div class="card-body">
+            <h3>Souvlaki</h3>
+            <p>Grilled meat skewers served with pita, tzatziki, and veggies.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="tzatziki.jpg" alt="Tzatziki">
+          <div class="card-body">
+            <h3>Tzatziki</h3>
+            <p>A refreshing yogurt dip made with cucumber and garlic.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Famous Greek Landmarks</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="acropolis.jpg" alt="Parthenon">
+          <div class="card-body">
+            <h3>Acropolis & Parthenon</h3>
+            <p>Ancient citadel and temple in Athens dedicated to goddess Athena.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="oia.jpg" alt="Oia Santorini">
+          <div class="card-body">
+            <h3>Oia Village, Santorini</h3>
+            <p>Famous for whitewashed homes, blue domes, and stunning sunsets.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="meteora.jpg" alt="Meteora">
+          <div class="card-body">
+            <h3>Meteora Monasteries</h3>
+            <p>UNESCO-listed monasteries perched on towering rock formations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Italy -->
+  <section id="italy-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Welcome to Italy</h1>
+        <p>Explore iconic landmarks and traditional foods</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+        <button class="main-button" onclick="showBudgetCalculator('italy')">View Travel Budget</button>
+      </div>
+
+      <h2>Traditional Italian Foods</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Supreme_pizza.jpg" alt="Pizza">
+          <div class="card-body">
+            <h3>Pizza</h3>
+            <p>Classic Neapolitan pizza with fresh tomato sauce, mozzarella, and basil. Wood-fired to perfection.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="carbonara.jpg" alt="Carbonara">
+          <div class="card-body">
+            <h3>Pasta Carbonara</h3>
+            <p>Spaghetti tossed with eggs, pancetta, cheese, and pepper. A rich Roman favorite.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="arancini.jpg" alt="Arancini">
+          <div class="card-body">
+            <h3>Arancini</h3>
+            <p>Golden, crispy rice balls filled with meat ragù, peas, and melted mozzarella.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Famous Italian Landmarks</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="colosseum.jpg" alt="Colosseum">
+          <div class="card-body">
+            <h3>The Colosseum, Rome</h3>
+            <p>An iconic amphitheater where gladiators once battled. A marvel of Roman engineering.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="pisa.jpg" alt="Leaning Tower of Pisa">
+          <div class="card-body">
+            <h3>The Leaning Tower of Pisa</h3>
+            <p>This famous tilted tower defies gravity and is a symbol of Italian uniqueness.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="pantheon.jpg" alt="Pantheon Rome">
+          <div class="card-body">
+            <h3>The Pantheon, Rome</h3>
+            <p>An ancient temple with a massive dome and oculus, now a church filled with light.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Turkey -->
+  <section id="turkey-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Welcome to Turkey</h1>
+        <p>Explore iconic landmarks and traditional foods</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+        <button class="main-button" onclick="showBudgetCalculator('turkey')">View Travel Budget</button>
+      </div>
+
+      <h2>Traditional Turkish Foods</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="lahmacun.jpg" alt="Lahmacun">
+          <div class="card-body">
+            <h3>Lahmacun</h3>
+            <p>A flatbread, often called Turkish pizza, topped with minced meat, tomato paste, garlic, and spices.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="doner.jpg" alt="Doner Kebab">
+          <div class="card-body">
+            <h3>Doner Kebab</h3>
+            <p>A popular dish made from stacked layers of lamb or beef, served in crusty bread with salad and sauce.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="baklava.jpg" alt="Baklava">
+          <div class="card-body">
+            <h3>Baklava</h3>
+            <p>A sweet pastry with filo layers, ground nuts, and honey syrup. A perfect Turkish dessert.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Famous Turkish Landmarks</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="topkapi.jpg" alt="Topkapi Palace">
+          <div class="card-body">
+            <h3>Topkapi Palace</h3>
+            <p>Once the primary residence of the Ottoman sultans, a historic palace in Istanbul with stunning gardens and artifacts.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="blue.jpg" alt="Blue Mosque">
+          <div class="card-body">
+            <h3>Blue Mosque</h3>
+            <p>Known for its stunning blue tiles and six minarets, this mosque is one of the most famous landmarks in Istanbul.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="bosphorus.jpg" alt="Bosphorus River">
+          <div class="card-body">
+            <h3>Bosphorus River</h3>
+            <p>A natural strait that connects the Black Sea to the Sea of Marmara, forming a boundary between Asia and Europe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spain -->
+  <section id="spain-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Welcome to Spain</h1>
+        <p>Discover landmarks and delicious food!</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+        <button class="main-button" onclick="showBudgetCalculator('spain')">View Travel Budget</button>
+      </div>
+
+      <h2>Famous Spanish Landmarks</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="casa.jpg" alt="Casa Batlló">
+          <div class="card-body">
+            <h3>Casa Batlló</h3>
+            <p>One of the most famous buildings in Barcelona, designed by Antoni Gaudí, known for its whimsical architecture.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="sagrada.jpg" alt="Sagrada Familia">
+          <div class="card-body">
+            <h3>Sagrada Familia</h3>
+            <p>Designed by Antoni Gaudí, this is one of Spain's most iconic landmarks in Barcelona.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="la boqueria.jpg" alt="La Boqueria">
+          <div class="card-body">
+            <h3>La Boqueria</h3>
+            <p>A popular market in Barcelona known for its fresh produce, meat, seafood, and local delicacies.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Spanish Cuisine</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="paella.jpg" alt="Paella">
+          <div class="card-body">
+            <h3>Paella</h3>
+            <p>A famous rice dish from Valencia, usually made with seafood or chicken and served with saffron.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="patatas.jpg" alt="Patatas Bravas">
+          <div class="card-body">
+            <h3>Patatas Bravas</h3>
+            <p>Fried potato cubes served with a spicy tomato sauce, a staple tapas dish in Spain.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="pisto.jpg" alt="Spanish Pisto">
+          <div class="card-body">
+            <h3>Spanish Pisto</h3>
+            <p>A vegetable stew made with tomatoes, peppers, zucchini, and sometimes eggs, often served with bread.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Switzerland -->
+  <section id="switzerland-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Welcome to Switzerland</h1>
+        <p>Discover the beauty of the Alps</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+        <button class="main-button" onclick="showBudgetCalculator('switzerland')">View Travel Budget</button>
+      </div>
+
+      <h2>Swiss Landmarks and Nature</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="8otmnnrjuhm.jpg" alt="The Alps">
+          <div class="card-body">
+            <h3>The Swiss Alps</h3>
+            <p>Majestic mountain range offering incredible skiing, hiking, and breathtaking views.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="lake geneva.jpg" alt="Lake Geneva">
+          <div class="card-body">
+            <h3>Lake Geneva</h3>
+            <p>A stunning alpine lake surrounded by beautiful vineyards and mountain scenery.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="9370.jpg" alt="Chillon Castle">
+          <div class="card-body">
+            <h3>Chillon Castle</h3>
+            <p>A medieval fortress on the shores of Lake Geneva with a history spanning over 1000 years.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Budget Calculator-->
+  <section id="budget-section" class="country-details">
+    <div class="container">
+      <header>
+        <h1>Travel Budget Calculator</h1>
+        <p id="budget-country-name">Calculate your travel costs</p>
+      </header>
+
+      <div class="nav-container">
+        <button class="main-button" id="budget-back-button">Back to Country</button>
+        <button class="main-button" onclick="showSection('map-section')">Back to Map</button>
+      </div>
+
+      <div class="budget-section">
+        <!-- Flag-->
+        <div class="flag-container">
+          <img id="flag" alt="Country Flag">
+          <button id="toggleFlagButton" class="main-button">Show Flag</button>
+        </div>
+      
+        <!-- Budget Form -->
+        <div>
+          <label for="comboBox">Number of People:</label>
+          <select id="comboBox">
+            <option value="item0">Select</option>
+            <option value="item1">Single</option>
+            <option value="item2">Double</option>
+            <option value="item3">Triple</option>
+          </select>
+
+          <!-- Cost Calculation -hidden -->
+          <div id="labelsContainer" class="hidden">
+            <div class="label-container">
+              <label>Ticket Price:</label>
+              <input type="text" id="tp" readonly>
+            </div>
+            <div class="label-container">
+              <label>Accommodation:</label>
+              <input type="text" id="acc" readonly>
+            </div>
+            <div class="label-container">
+              <label>Food:</label>
+              <input type="text" id="food" readonly>
+            </div>
+            <div class="total-container">
+              <label>Total Before Discount:</label>
+              <span id="totalValue">0</span> pounds
+            </div>
+            <div class="total-container">
+              <label>Discount:</label>
+              <span id="discountValue">0</span> pounds
+            </div>
+            <div class="total-container">
+              <label>Final Price:</label>
+              <span id="finalValue">0</span> pounds
+            </div>
+            <div><p>Note: Prices are not acurate and are just to show the website's functionality</a></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Store the country information
+    const countryInfo = {
+      greece: {
+        name: "Greece",
+        area: "131,957 km²",
+        sites: "Athens, Volos",
+        currency: "Euro",
+        flag: "greece.jpg"
+      },
+      italy: {
+        name: "Italy",
+        area: "302,073 km²",
+        sites: "Rome, Milan",
+        currency: "Euro",
+        flag: "italy.jpg"
+      },
+      turkey: {
+        name: "Turkey",
+        area: "783,356 km²",
+        sites: "Istanbul, Ankara, Cappadocia",
+        currency: "Turkish Lira",
+        flag: "turkey.jpg"
+      },
+      switzerland: {
+        name: "Switzerland",
+        area: "41,285 km²",
+        sites: "Bern, Zurich",
+        currency: "Franc",
+        flag: "switzerland.jpg"
+      },
+      spain: {
+        name: "Spain",
+        area: "506,030 km²",
+        sites: "Madrid, Barcelona",
+        currency: "Euro",
+        flag: "spain.jpg"
+      }
+    };
+
+    let currentCountry = '';
+
+    // Initial DOM document loading
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show welcome name prompt
+      setTimeout(function() {
+        alert(" Did you know that the term bug for computer problems comes from an actual moth that got trapped in an early computer in 1947, causing it to malfunction.");
+        let userName = prompt("Please type in your name");
+        if (userName) {
+          alert("Congratulations " + userName + ", travelling is a very good choice!");
+          document.getElementById("welcomeMessage").innerText = "Welcome " + userName + "! Join us in an amazing adventure across Europe";
+        }
+      }, 500);
+
+      // Explore button 
+      document.getElementById("exploreButton").addEventListener("click", function() {
+        showSection("map-section");
+      });
+    });
+    // Handle country selection on the map
+    function showCountry(country) {
+      // Update info box
+      const info = countryInfo[country];
+      document.getElementById("infoBox").innerHTML = `
+        <strong>The country is:</strong> ${info.name}<br>
+        <strong>Area:</strong> ${info.area}<br>
+        <strong>Sites:</strong> ${info.sites}<br>
+        <strong>Currency:</strong> ${info.currency}
+      `;
+      
+      // Show country section
+      showSection(country + "-section");
+    }
+
+    // Show budget calculator for a specific country
+    function showBudgetCalculator(country) {
+      currentCountry = country;
+      const info = countryInfo[country];
+      
+      // Update budget section with country info
+      document.getElementById("budget-country-name").innerText = `Calculate your ${info.name} travel costs`;
+      document.getElementById("flag").src = info.flag;
+      
+      // Set back button action
+      document.getElementById("budget-back-button").onclick = function() {
+        showSection(country + "-section");
+      };
+      
+      // Reset budget form
+      document.getElementById("comboBox").value = "item0";
+      document.getElementById("labelsContainer").classList.add("hidden");
+      
+      // Show budget section
+      showSection("budget-section");
+    }
+
+    // Toggle flag visibility
+    document.getElementById("toggleFlagButton").onclick = function() {
+      let flag = document.getElementById("flag");
+      let button = document.getElementById("toggleFlagButton");
+
+      if (flag.style.display === "none" || flag.style.display === "") {
+        flag.style.display = "block";
+        button.innerText = "Hide Flag";
+      } else {
+        flag.style.display = "none";
+        button.innerText = "Show Flag";
+      }
+    };
+
+    // Show cost details & update values based on selection
+    document.getElementById("comboBox").onchange = function() {
+      let selectedValue = this.value;
+      let labelsContainer = document.getElementById("labelsContainer");
+
+      if (selectedValue !== "item0") {
+        labelsContainer.classList.remove("hidden");
+      } else {
+        labelsContainer.classList.add("hidden");
+      }
+
+      // Call the calculateTotal function whenever the combo box changes
+      calculateTotal();
+    };
+
+    // Calculate total cost and update input fields dynamically
+    function calculateTotal() {
+      let base_tp = 100;
+      let base_acc = 200;
+      let base_food = 300;
+      let multiplier = 1;
+      let discount = 0;
+
+      let selectedValue = document.getElementById("comboBox").value;
+
+      if (selectedValue === "item2") {  // Double
+        multiplier = 2;
+        discount = 0.10;
+      } else if (selectedValue === "item3") {  // Triple
+        multiplier = 3;
+        discount = 0.12;
+      }
+
+      // Multiply costs
+      let tp = base_tp * multiplier;
+      let acc = base_acc * multiplier;
+      let food = base_food * multiplier;
+
+      let total = tp + acc + food;
+      let discountAmount = total * discount;
+      let finalPrice = total - discountAmount;
+
+      // Update input fields
+      document.getElementById("tp").value = tp;
+      document.getElementById("acc").value = acc;
+      document.getElementById("food").value = food;
+
+      // Update total calculations
+      document.getElementById("totalValue").innerText = total.toFixed(2);
+      document.getElementById("discountValue").innerText = discountAmount.toFixed(2);
+      document.getElementById("finalValue").innerText = finalPrice.toFixed(2);
+    }
+
+    // Function to show a specific section and hide others
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show the requested section
+      document.getElementById(sectionId).style.display = 'block';
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+    document.getElementById("specialButton").addEventListener("click", function() {
+      window.location.href="special.html" });
+  </script>
+</body>
+</html>
