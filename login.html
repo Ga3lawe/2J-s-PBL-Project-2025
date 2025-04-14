@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>European Travel Guide - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .login-header {
+      background: linear-gradient(45deg, #2c3e50, #4a6491);
+      padding: 25px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-header p {
+      font-size: 1rem;
+      opacity: 0.8;
+      position: relative;
+      z-index: 2;
+    }
+
+    .decoration {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      right: -50px;
+      top: -50px;
+    }
+
+    .decoration:nth-child(2) {
+      width: 100px;
+      height: 100px;
+      left: -30px;
+      bottom: -30px;
+      top: auto;
+      right: auto;
+    }
+
+    .login-form {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2c3e50;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #6e8efb;
+      box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+      outline: none;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .btn-login {
+      background: linear-gradient(45deg, #2c3e50, #4a6491);
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(45deg, #1a2530, #3a526f);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .signup-link a {
+      color: #6e8efb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 43px;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .remember-me input {
+      margin-right: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        width: 95%;
+      }
+      
+      .login-header {
+        padding: 20px;
+      }
+      
+      .login-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .login-form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-header">
+      <div class="decoration"></div>
+      <div class="decoration"></div>
+      <h1>Welcome Back</h1>
+      <p>Login to continue your European journey</p>
+    </div>
+    
+    <div class="login-form">
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username or Email</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username or email">
+          <span class="error-message" id="username-error">Please enter your username or email</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password">
+          <span class="password-toggle" id="passwordToggle">👁️</span>
+          <span class="error-message" id="password-error">Please enter your password</span>
+        </div>
+        
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember">
+          <label for="remember">Remember me</label>
+        </div>
+        
+        <div class="error-message" id="login-error">Invalid username or password</div>
+        
+        <button type="submit" class="btn-login">Log In</button>
+      </form>
+      
+      <div class="signup-link">
+        Don't have an account? <a href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const passwordField = document.getElementById('password');
+      const passwordToggle = document.getElementById('passwordToggle');
+      
+      // Toggle password visibility
+      passwordToggle.addEventListener('click', function() {
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          passwordToggle.textContent = '🔒';
+        } else {
+          passwordField.type = 'password';
+          passwordToggle.textContent = '👁️';
+        }
+      });
+      
+      // Form validation
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset error messages
+        const errorMessages = document.querySelectorAll('.error-message');
+        errorMessages.forEach(msg => msg.style.display = 'none');
+        
+        // Get values
+        const username = document.getElementById('username').value.trim();
+        const password = passwordField.value;
+        
+        let isValid = true;
+        
+        // Validate username
+        if (username === '') {
+          document.getElementById('username-error').style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate password
+        if (password === '') {
+          document.getElementById('password-error').style.display = 'block';
+          isValid = false;
+        }
+        
+        if (isValid) {
+            window.location.href = 'page1';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
